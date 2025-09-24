@@ -23,7 +23,7 @@ public:
 	static void Configure(duckdb::DatabaseInstance& db);										// 对实例进行配置
 	static void ConfigureLocal(duckdb::DatabaseInstance& db);									// 对临时内存模式实例进行配置
 	static void ConfigureGlobal();																// 对全局存储模式实例进行配置
-	static void ConfigureTables(ducjdb::Connection& con, ConfigType type);						// 对表进行配置
+	static void ConfigureTables(duckdb::Connection& con, ConfigType type);						// 对表进行配置
 
 	static std::string get_schema_name();														// 获取 schema 名称
 	static std::filesystem::path get_global_storage_path();										// 获取全局存储模型路径
