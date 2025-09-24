@@ -8,10 +8,10 @@ namespace regdb {
 // 注册函数统一入口
 class Registry {
 public:
-    static void Register(duckdb::DatabaseInstance& db);
+    static void Register(duckdb::ExtensionLoader& loader);
 
 private:
-    static void RegisterScalarFunctions(duckdb::DatabaseInstance& db);
+    static void RegisterScalarFunctions(duckdb::ExtensionLoader& loader);
 };
 
 } // namesapce regdb

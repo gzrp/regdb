@@ -8,10 +8,10 @@ namespace regdb {
 // 标量函数统一注册入口
 class ScalarRegistry {
 public:
-    static void Register(duckdb::DatabaseInstance& db);
+    static void Register(duckdb::ExtensionLoader& loader);
 
 private:
-    static void RegisterQuack(duckdb::DatabaseInstance& db);
+    static void RegisterQuack(duckdb::ExtensionLoader& loader);
 };
 
 } // namesapce regdb
