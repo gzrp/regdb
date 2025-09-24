@@ -277,7 +277,7 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
         query = duckdb_fmt::format(" UPDATE {}regdb_config.REGDB_REG_SPACE_TABLE "
                                    " SET reg_args= '{}' "
                                    " WHERE reg_space = '{}'; ",
-                                   catalog, update_stmt.reg_args.dump(), update_stmt.reg_space);
+                                   catalog, update_stmt.new_reg_args.dump(), update_stmt.reg_space);
         break;
     }
     case StatementType::UPDATE_REGSPACE_SCOPE: {
