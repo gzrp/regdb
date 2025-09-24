@@ -2,12 +2,12 @@
 
 namespace regdb {
 
-void Registry::Register(duckdb::DatabaseInstance& db) {
-    RegisterScalarFunctions(db);
+void Registry::Register(duckdb::ExtensionLoader& loader) {
+    RegisterScalarFunctions(loader);
 }
 
-void Registry::RegisterScalarFunctions(duckdb::DatabaseInstance& db) {
-    ScalarRegistry::Register(db);
+void Registry::RegisterScalarFunctions(duckdb::ExtensionLoader& loader) {
+    ScalarRegistry::Register(loader);
 }
 
 } // namespace regdb
