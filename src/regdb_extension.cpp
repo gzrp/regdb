@@ -75,13 +75,14 @@ BoundStatement duck_bind(ClientContext& context, Binder& binder, OperatorExtensi
 }
 */
 
-void RegdbExtension::Load(DuckDB& db) {
-    LoadInternal(*db.instance);
+void RegdbExtension::Load(ExtensionLoader &loader) {
+    LoadInternal(loader.GetDatabaseInstance());
 }
 
 std::string RegdbExtension::Name() {
     return "regdb";
 }
+
 std::string RegdbExtension::Version() const {
     #ifdef EXT_VERSION_REGDB
         return EXT_VERSION_REGDB;
@@ -92,19 +93,6 @@ std::string RegdbExtension::Version() const {
 
 } // namespace duckdb
 
-extern "C" {
-
-DUCKDB_EXTENSION_API void regdb_init(duckdb::DatabaseInstance& db) {
-    duckdb::DuckDB db_wrapper(db);
-    db_wrapper.LoadExtension<duckdb::RegdbExtension>();
+DUCKDB_CPP_EXTENSION_ENTRY(regdb, loader) {
+    duckdb::LoadInternal(loader);
 }
-
-DUCKDB_EXTENSION_API const char* regdb_version() {
-    return duckdb::DuckDB::LibraryVersion();
-}
-
-}
-
-#ifndef DUCKDB_EXTENSION_MAIN
-#error DUCKDB_EXTENSION_MAIN not defined
-#endif
