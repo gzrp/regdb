@@ -153,7 +153,7 @@ void Config::ConfigRegSpaceTable(duckdb::Connection& con, std::string& schema_na
         // 测试使用
         if (type == ConfigType::GLOBAL) {
             con.Query(duckdb_fmt::format(" INSERT INTO {}.{} (reg_space, reg_args) "
-                                         " VALUES ('default', '{\"use_weight_decay\": true, \"use_dropout\": true, \"use_bn\": true, \"use_ln\": true, \"use_skip\": true, \"use_data_augment\": true, \"use_swa\": true, \"use_lookahead\": true }'); ",
+                                         " VALUES ('default', '{{\"use_weight_decay\": true, \"use_dropout\": true, \"use_bn\": true, \"use_ln\": true, \"use_skip\": true, \"use_data_augment\": true, \"use_swa\": true, \"use_lookahead\": true }}'); ",
                                          schema_name, table_name));
         }
     }
