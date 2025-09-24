@@ -1,6 +1,9 @@
 #define DUCKDB_EXTENSION_MAIN
 
 #include "regdb_extension.hpp"
+
+#include "duckdb/parser/parser.hpp"
+#include "duckdb/parser/statement/extension_statement.hpp"
 #include "regdb/core/common.hpp"
 #include "regdb/core/config.hpp"
 #include "regdb/custom_parser/query_parser.hpp"
