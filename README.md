@@ -2,7 +2,10 @@
 
 扩展 RegDB
 
+git clone --recurse-submodules https://github.com/gzrp/regdb.git
+
 ## 构建
+
 ### 管理依赖
 
 DuckDB扩展使用VCPKG进行依赖管理。VCPKG 参考 [installation instructions](https://vcpkg.io/en/getting-started) 或者运行下述命令:
