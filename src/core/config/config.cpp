@@ -100,7 +100,7 @@ std::string Config::get_regspace_table_name() {
 }
 
 void Config::ConfigModelArchTable(duckdb::Connection& con, std::string& schema_name, const ConfigType type) {
-    const std::string table_name = Config::get_modelspace_table_name();
+    const std::string table_name = Config::get_modelarch_table_name();
     // 查询表是否存在
     auto result = con.Query(duckdb_fmt::format(" SELECT table_name "
                                                " FROM information_schema.tables "
