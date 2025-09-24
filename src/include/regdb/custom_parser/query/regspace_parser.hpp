@@ -38,7 +38,7 @@ class UpdateRegSpaceStatement : public QueryStatement {
 public:
     UpdateRegSpaceStatement() { type = StatementType::UPDATE_REGSPACE; };
     std::string reg_space;
-    std::string new_reg_args;
+    nlohmann::json new_reg_args;
 };
 
 class GetRegSpaceStatement : public QueryStatement {
