@@ -161,8 +161,9 @@ void Config::ConfigRegSpaceTable(duckdb::Connection& con, std::string& schema_na
 }
 
 // 注册 db
-void Config::Configure(duckdb::DatabaseInstance& db) {
-    Registry::Register(db);
+void Config::Configure(duckdb::ExtensionLoader& loader) {
+    Registry::Register(loader);
+    auto& db = loader.GetDatabaseInstance();
     if (const auto db_path = db.config.options.database_path; db_path != get_global_storage_path().string()) {
         SetupGlobalStorageLocation();
         ConfigureGlobal();

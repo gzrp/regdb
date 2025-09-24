@@ -20,7 +20,7 @@ public:
  	static duckdb::Connection GetLocalConnection(duckdb::DatabaseInstance* db = nullptr);		// 获取当前临时内存实例连接
 	static duckdb::Connection GetGlobalConnection();											// 获取全局存储模式实例连接
 
-	static void Configure(duckdb::DatabaseInstance& db);										// 对实例进行配置
+	static void Configure(duckdb::ExtensionLoader& loader);										// 对实例进行配置
 	static void ConfigureLocal(duckdb::DatabaseInstance& db);									// 对临时内存模式实例进行配置
 	static void ConfigureGlobal();																// 对全局存储模式实例进行配置
 	static void ConfigureTables(duckdb::Connection& con, ConfigType type);						// 对表进行配置
