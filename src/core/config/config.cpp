@@ -18,7 +18,6 @@ std::filesystem::path Config::get_global_storage_path() {
     const char* homeDir = getenv("USERPROFILE");
 #else
     const char* homeDir = getenv("HOME");
-    const char* homeDir = getenv("HOME");
 #endif
     if (homeDir == nullptr) {
         throw std::runtime_error("Could not find home directory");
@@ -76,7 +75,7 @@ void Config::ConfigureGlobal() {
 
 // 配置本地模式, 同时也可以访问持久化
 void Config::ConfigureLocal(duckdb::DatabaseInstance& db) {
-    auto con = Config::GetConnection(&db);
+    auto con = Config::GetLocalConnection(&db);
     ConfigureTables(con, ConfigType::LOCAL);
     con.Query(
         duckdb_fmt::format("ATTACH DATABASE '{}' AS regdb_storage;", Config::get_global_storage_path().string())
@@ -154,7 +153,7 @@ void Config::ConfigRegSpaceTable(duckdb::Connection& con, std::string& schema_na
         // 测试使用
         if (type == ConfigType::GLOBAL) {
             con.Query(duckdb_fmt::format(" INSERT INTO {}.{} (reg_space, reg_args) "
-                                         " VALUES ('default', '{\"use_weight_decay\": true, \"use_dropout\": true, \"use_bn\": "true", \"use_ln\": "true", \"use_skip\": "true", \"use_data_augment\": "true", \"use_swa\": "true", \"use_lookahead\": "true" }'); ",
+                                         " VALUES ('default', '{\"use_weight_decay\": true, \"use_dropout\": true, \"use_bn\": true, \"use_ln\": true, \"use_skip\": true, \"use_data_augment\": true, \"use_swa\": true, \"use_lookahead\": true }'); ",
                                          schema_name, table_name));
         }
     }

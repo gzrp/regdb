@@ -4,7 +4,7 @@
 #include <nlohmann/json.hpp>
 #include "regdb/core/common.hpp"
 
-namespace geofer {
+namespace regdb {
 
 class ScalarFunctionBase {
 public:

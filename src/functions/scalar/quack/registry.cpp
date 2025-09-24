@@ -4,7 +4,7 @@
 namespace regdb {
 
 void ScalarRegistry::RegisterQuack(duckdb::ExtensionLoader& loader) {
-    loader::RegisterFunction(
+    loader.RegisterFunction(
         duckdb::ScalarFunction(
             "quack",
             {
