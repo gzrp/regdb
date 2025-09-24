@@ -76,7 +76,7 @@ BoundStatement duck_bind(ClientContext& context, Binder& binder, OperatorExtensi
 
 */
 
-void RegdbExtension::Load(ExtensionLoader &loader) {
+void RegdbExtension::Load(ExtensionLoader& loader) {
     LoadInternal(loader);
 }
 

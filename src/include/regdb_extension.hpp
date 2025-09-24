@@ -6,7 +6,7 @@ namespace duckdb {
 
 class RegdbExtension : public Extension {
 public:
-    void Load(ExtensionLoader &loader) override;
+    void Load(ExtensionLoader& loader) override;
     std::string Name() override;
     std::string Version() const override;
 };
