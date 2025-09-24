@@ -34,7 +34,7 @@ std::vector<std::string> SearchRegArgs::Operation(duckdb::DataChunk& args) {
 
 void SearchRegArgs::Execute(duckdb::DataChunk& args, duckdb::ExpressionState& state, duckdb::Vector& result) {
     // valid -> operation
-    const auto responses = Quack::Operation(args);
+    const auto responses = SearchRegArgs::Operation(args);
     duckdb::idx_t pos = 0;
     for (const auto &res : responses) {
         result.SetValue(pos++, duckdb::Value(res));
