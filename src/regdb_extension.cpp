@@ -3,7 +3,7 @@
 #include "regdb_extension.hpp"
 #include "regdb/core/common.hpp"
 #include "regdb/core/config.hpp"
-
+#include "regdb/custom_parser/query_parser.hpp"
 
 /**
 *  加载扩展 regdb_init  -> RegdbExtension::Load -> LoadInternal -> 将 func, DuckParserExtension 和 DuckOperatorExtension 塞入 DBConfig
@@ -22,13 +22,12 @@ static void LoadInternal(ExtensionLoader& loader) {
     regdb::Config::Configure(loader);
 
     // Register the custom parser
- //   auto& config = DBConfig::GetConfig(loader.GetDatabaseInstance());
- //   DuckParserExtension duck_parser;
- //   config.parser_extensions.push_back(duck_parser);
- //   config.operator_extensions.push_back(make_uniq<DuckOperatorExtension>());
+    auto& config = DBConfig::GetConfig(loader.GetDatabaseInstance());
+    DuckParserExtension duck_parser;
+    config.parser_extensions.push_back(duck_parser);
+    config.operator_extensions.push_back(make_uniq<DuckOperatorExtension>());
 }
 
-/*
 ParserExtensionParseResult duck_parse(ParserExtensionInfo*, const std::string& query) {
     flock::QueryParser query_parser;
 
@@ -73,8 +72,6 @@ BoundStatement duck_bind(ClientContext& context, Binder& binder, OperatorExtensi
             return {};
     }
 }
-
-*/
 
 void RegdbExtension::Load(ExtensionLoader& loader) {
     LoadInternal(loader);
