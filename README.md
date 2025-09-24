@@ -51,7 +51,7 @@ GEN=ninja make
 现在我们可以直接在DuckDB中使用扩展的特性了。模板包含一个标量函数‘ regdb() ’，它接受一个字符串参数并返回一个字符串：
 
 ```
-D select regdb('Jane') as result;
+D select quack('Jane') as result;
 ┌───────────────┐
 │    result     │
 │    varchar    │
