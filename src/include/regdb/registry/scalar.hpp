@@ -12,6 +12,7 @@ public:
 
 private:
     static void RegisterQuack(duckdb::ExtensionLoader& loader);
+    static void RegisterSearchRegArgs(duckdb::ExtensionLoader& loader);
 };
 
 } // namesapce regdb

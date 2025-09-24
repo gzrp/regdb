@@ -5,6 +5,7 @@ namespace regdb {
 // Register 方法实现，注册所有的私有函数
 void ScalarRegistry::Register(duckdb::ExtensionLoader& loader) {
     RegisterQuack(loader);
+    RegisterSearchRegArgs(loader);
 }
 
 } // namespace regdb

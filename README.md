@@ -92,10 +92,11 @@ UPDATE REGSPACE 'space-1' TO LOCAL;
 
 UPDATE REGSPACE ('space-2', {"use_weight_decay": false, "use_dropout": true, "use_bn": true, "use_ln": true, "use_skip": true, "use_data_augment": true, "use_swa": true, "use_lookahead": true});
 
-
-GET REGSPACE;
 GET REGSPACES;
 GET REGSPACE 'space-1';
+
+
+DELETE REGSPACE 'space-1';
 
 ```
 
