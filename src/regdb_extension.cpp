@@ -29,7 +29,7 @@ static void LoadInternal(ExtensionLoader& loader) {
 }
 
 ParserExtensionParseResult duck_parse(ParserExtensionInfo*, const std::string& query) {
-    flock::QueryParser query_parser;
+    regdb::QueryParser query_parser;
 
     // Translate and print SQL queries for each input query
     std::string sql_query = query_parser.ParseQuery(query);
