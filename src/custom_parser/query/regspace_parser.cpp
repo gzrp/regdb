@@ -71,11 +71,11 @@ void RegSpaceParser::ParseCreateRegSpace(Tokenizer& tokenizer, std::unique_ptr<Q
     auto reg_args = nlohmann::json::parse(token.value);
     const std::set<std::string> expected_keys = {"use_weight_decay", "use_dropout", "use_bn", "use_ln", "use_skip", "use_data_augment", "use_swa", "use_lookahead"};
     std::set<std::string> json_keys;
-    for (auto it = model_args.begin(); it != model_args.end(); ++it) {
+    for (auto it = reg_args.begin(); it != reg_args.end(); ++it) {
         json_keys.insert(it.key());
     }
     if (json_keys != expected_keys) {
-        throw std::runtime_error("Expected keys: use_weight_decay, use_dropout, use_bn, use_ln, use_skip, use_data_augment, use_swa, use_lookahead in model_args.");
+        throw std::runtime_error("Expected keys: use_weight_decay, use_dropout, use_bn, use_ln, use_skip, use_data_augment, use_swa, use_lookahead in new_reg_args.");
     }
     token = tokenizer.NextToken();
     if (token.type != TokenType::PARENTHESIS || token.value != ")") {
@@ -172,11 +172,11 @@ void RegSpaceParser::ParseUpdateRegSpace(Tokenizer& tokenizer, std::unique_ptr<Q
         auto new_reg_args = nlohmann::json::parse(token.value);
         const std::set<std::string> expected_keys = {"use_weight_decay", "use_dropout", "use_bn", "use_ln", "use_skip", "use_data_augment", "use_swa", "use_lookahead"};
         std::set<std::string> json_keys;
-        for (auto it = model_args.begin(); it != model_args.end(); ++it) {
+        for (auto it = new_reg_args.begin(); it != new_reg_args.end(); ++it) {
             json_keys.insert(it.key());
         }
         if (json_keys != expected_keys) {
-            throw std::runtime_error("Expected keys: use_weight_decay, use_dropout, use_bn, use_ln, use_skip, use_data_augment, use_swa, use_lookahead in model_args.");
+            throw std::runtime_error("Expected keys: use_weight_decay, use_dropout, use_bn, use_ln, use_skip, use_data_augment, use_swa, use_lookahead in new_reg_args.");
         }
 
         token = tokenizer.NextToken();
@@ -230,7 +230,7 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
     switch (statement.type) {
     case StatementType::CREATE_REGSPACE: {
         const auto& create_stmt = static_cast<const CreateRegSpaceStatement&>(statement);
-        auto con = Config::GetConnection();
+        auto con = Config::GetLocalConnection();
         auto result = con.Query(duckdb_fmt::format(" SELECT reg_space "
                                                    " FROM {}regdb_config.REGDB_REG_SPACE_TABLE"
                                                    " WHERE reg_space = '{}';",
@@ -247,7 +247,7 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
     }
     case StatementType::DELETE_REGSPACE: {
         const auto& delete_stmt = static_cast<const DeleteRegSpaceStatement&>(statement);
-        auto con = Config::GetConnection();
+        auto con = Config::GetLocalConnection();
         auto result = con.Query(duckdb_fmt::format(" DELETE FROM regdb_config.REGDB_REG_SPACE_TABLE "
                                                    " WHERE reg_space = '{}'; ",
                                                    delete_stmt.reg_space));
@@ -259,7 +259,7 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
     }
     case StatementType::UPDATE_REGSPACE: {
         const auto& update_stmt = static_cast<const UpdateRegSpaceStatement&>(statement);
-        auto con = Config::GetConnection();
+        auto con = Config::GetLocalConnection();
         auto result = con.Query(duckdb_fmt::format( " SELECT reg_space, 'global' AS scope "
                                                     " FROM regdb_storage.regdb_config.REGDB_REG_SPACE_TABLE "
                                                     " WHERE reg_space = '{}' "
@@ -282,7 +282,7 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
     }
     case StatementType::UPDATE_REGSPACE_SCOPE: {
         const auto& update_stmt = static_cast<const UpdateRegSpaceScopeStatement&>(statement);
-        auto con = Config::GetConnection();
+        auto con = Config::GetLocalConnection();
         auto result = con.Query(duckdb_fmt::format(" SELECT reg_space "
                                                    " FROM {}regdb_config.REGDB_REG_SPACE_TABLE"
                                                    " WHERE reg_space = '{}';",
@@ -316,7 +316,7 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
                                  " UNION ALL "
                                  " SELECT 'local' AS scope, * "
                                  " FROM regdb_config.REGDB_REG_SPACE_TABLE "
-                                 " WHERE reg_space = '{}'; "
+                                 " WHERE reg_space = '{}'; ",
                                  get_stmt.reg_space, get_stmt.reg_space);
 
         break;
@@ -326,7 +326,7 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
                                    " FROM regdb_storage.regdb_config.REGDB_REG_SPACE_TABLE "
                                    " UNION ALL "
                                    " SELECT 'local' as scope, * "
-                                   " FROM regdb_config.REGDB_REG_SPACE_TABLE;";
+                                   " FROM regdb_config.REGDB_REG_SPACE_TABLE;"
                                    );
         break;
     }

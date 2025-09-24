@@ -241,7 +241,7 @@ std::string ModelParser::ToSQL(const QueryStatement& statement) const {
     switch (statement.type) {
     case StatementType::CREATE_MODEL: {
         const auto& create_stmt = static_cast<const CreateModelStatement&>(statement);
-        auto con = Config::GetConnection();
+        auto con = Config::GetLocalConnection();
         auto result = con.Query(duckdb_fmt::format(
             " SELECT model_name "
             " FROM {}regdb_config.REGDB_MODEL_ARCH_TABLE "
@@ -266,7 +266,7 @@ std::string ModelParser::ToSQL(const QueryStatement& statement) const {
     }
     case StatementType::DELETE_MODEL: {
         const auto& delete_stmt = static_cast<const DeleteModelStatement&>(statement);
-        auto con = Config::GetConnection();
+        auto con = Config::GetLocalConnection();
 
         con.Query(duckdb_fmt::format(" DELETE FROM regdb_config.REGDB_MODEL_ARCH_TABLE "
                                      " WHERE model_name = '{}';",
@@ -280,7 +280,7 @@ std::string ModelParser::ToSQL(const QueryStatement& statement) const {
     }
 	case StatementType::UPDATE_MODEL: {
 		const auto& update_stmt = static_cast<const UpdateModelStatement&>(statement);
-		auto con = Config::GetConnection();
+		auto con = Config::GetLocalConnection();
 		// 获取模型
 		auto result = con.Query(
 			duckdb_fmt::format( " SELECT model_name, 'global' AS scope "
@@ -306,7 +306,7 @@ std::string ModelParser::ToSQL(const QueryStatement& statement) const {
 
 	case StatementType::UPDATE_MODEL_SCOPE: {
         const auto& update_stmt = static_cast<const UpdateModelScopeStatement&>(statement);
-        auto con = Config::GetConnection();
+        auto con = Config::GetLocalConnection();
         auto result = con.Query(duckdb_fmt::format(" SELECT model_name "
                                          		   " FROM {}regdb_config.REGDB_MODEL_ARCH_TABLE "
                                                    " WHERE model_name = '{}';",
