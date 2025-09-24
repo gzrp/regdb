@@ -86,20 +86,20 @@ void Config::ConfigureTables(duckdb::Connection& con, const ConfigType type) {
     con.BeginTransaction();
     std::string schema = Config::get_schema_name();
     ConfigSchema(con, schema);
-    ConfigModelSpaceTable(con, schema, type);
+    ConfigModelArchTable(con, schema, type);
     ConfigRegSpaceTable(con, schema, type);
     con.Commit();
 }
 
-std::string Config::get_modelspace_table_name() {
-    return "REGDB_MODEL_SPACE_TABLE";
+std::string Config::get_modelarch_table_name() {
+    return "REGDB_MODEL_ARCH_TABLE";
 }
 
 std::string Config::get_regspace_table_name() {
     return "REGDB_REG_SPACE_TABLE";
 }
 
-void Config::ConfigModelSpaceTable(duckdb::Connection& con, std::string& schema_name, const ConfigType type) {
+void Config::ConfigModelArchTable(duckdb::Connection& con, std::string& schema_name, const ConfigType type) {
     const std::string table_name = Config::get_modelspace_table_name();
     // 查询表是否存在
     auto result = con.Query(duckdb_fmt::format(" SELECT table_name "
@@ -142,10 +142,9 @@ void Config::ConfigRegSpaceTable(duckdb::Connection& con, std::string& schema_na
         con.Query(duckdb_fmt::format(" INSTALL JSON; "
                                      " LOAD JSON; "
                                      " CREATE TABLE {}.{} ( "
-                                     " reg_space VARCHAR NOT NULL, "
+                                     " reg_space VARCHAR NOT NULL PRIMARY KEY, "
                                      " reg_args JSON NOT NULL, "
-                                     " updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
-                                     " PRIMARY KEY reg_space "
+                                     " updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP "
                                      " ); ",
                                      schema_name, table_name));
 

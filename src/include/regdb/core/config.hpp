@@ -27,13 +27,13 @@ public:
 
 	static std::string get_schema_name();														// 获取 schema 名称
 	static std::filesystem::path get_global_storage_path();										// 获取全局存储模型路径
-	static std::string get_modelspace_table_name();												// 获取模型表名称
+	static std::string get_modelarch_table_name();												// 获取模型表名称
 	static std::string get_regspace_table_name();												// 获取正则化表名称
 
 private:
 	static void SetupGlobalStorageLocation();																// 设置全局存储路径
 	static void ConfigSchema(duckdb::Connection& con, std::string& schema_name);							// 配置 schema 名称
-	static void ConfigModelSpaceTable(duckdb::Connection& con, std::string& schema_name, ConfigType type);	// 配置模型空间表
+	static void ConfigModelArchTable(duckdb::Connection& con, std::string& schema_name, ConfigType type);	// 配置模型空间表
 	static void ConfigRegSpaceTable(duckdb::Connection& con, std::string& schema_name, ConfigType type);	// 配置正则化空间表
 
 }; // class Config
