@@ -272,7 +272,6 @@ std::string RegSpaceParser::ToSQL(const QueryStatement& statement) const {
             throw std::runtime_error(duckdb_fmt::format("RegSpace '{}' doesn't exist.", update_stmt.reg_space));
         }
 
-        int version = result->GetValue<int>(0, 0) + 1;
         auto catalog = result->GetValue(1, 0).ToString() == "global" ? "regdb_storage." : "";
         query = duckdb_fmt::format(" UPDATE {}regdb_config.REGDB_REG_SPACE_TABLE "
                                    " SET reg_args= '{}' "

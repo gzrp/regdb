@@ -216,7 +216,7 @@ void ModelParser::ParseGetModel(Tokenizer &tokenizer, std::unique_ptr<QueryState
         throw std::runtime_error("Expected 'MODEL' after 'GET'.");
     }
     token = tokenizer.NextToken();
-    if (token.type == TokenType::SYMBOL || token.value == ";") {
+    if ((token.type == TokenType::SYMBOL || token.value == ";") && value == "MODELS" {
         auto get_all_statement = std::make_unique<GetAllModelStatement>();
         statement = std::move(get_all_statement);
     } else {

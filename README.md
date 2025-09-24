@@ -67,3 +67,35 @@ D select quack('Jane') as result;
 ```sh
 make test
 ```
+
+```
+CREATE LOCAL MODEL ('model-1', 'MLP', {"in_features": 10, "out_features":2, "hidden_features":[512, 512, 512, 512, 512, 512]});
+CREATE GLOBAL MODEL ('model-2', 'MLP', {"in_features": 10, "out_features":2, "hidden_features":[512, 512, 512, 512, 512, 512]});
+
+UPDATE MODEL 'model-1' TO GLOBAL;
+UPDATE MODEL 'model-1' TO LOCAL;
+UPDATE MODEL ('model-2', 'MLP1', {"in_features": 10, "out_features": 20, "hidden_features":[512, 512, 512, 512, 512, 512]});
+
+GET MODEL;
+GET MODELS;
+GET MODEL 'model-1';
+
+DELETE MODEL 'model-2';
+```
+
+```
+CREATE LOCAL REGSPACE ('space-1', {"use_weight_decay": true, "use_dropout": true, "use_bn": true, "use_ln": true, "use_skip": true, "use_data_augment": true, "use_swa": true, "use_lookahead": true});
+CREATE GLOBAL REGSPACE ('space-2', {"use_weight_decay": true, "use_dropout": true, "use_bn": true, "use_ln": true, "use_skip": true, "use_data_augment": true, "use_swa": true, "use_lookahead": true});
+
+UPDATE REGSPACE 'space-1' TO GLOBAL;
+UPDATE REGSPACE 'space-1' TO LOCAL;
+
+UPDATE REGSPACE ('space-2', {"use_weight_decay": false, "use_dropout": true, "use_bn": true, "use_ln": true, "use_skip": true, "use_data_augment": true, "use_swa": true, "use_lookahead": true});
+
+
+GET REGSPACE;
+GET REGSPACES;
+GET REGSPACE 'space-1';
+
+```
+
