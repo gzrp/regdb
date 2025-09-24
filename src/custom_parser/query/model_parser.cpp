@@ -210,13 +210,13 @@ void ModelParser::ParseUpdateModel(Tokenizer& tokenizer, std::unique_ptr<QuerySt
 void ModelParser::ParseGetModel(Tokenizer &tokenizer, std::unique_ptr<QueryStatement>& statement) {
     auto token = tokenizer.NextToken();
     auto value = duckdb::StringUtil::Upper(token.value);
-    // GET MODEL|MODELS;
+    // GET MODELS;
     // GET MODEL <model_name>;
     if (token.type != TokenType::KEYWORD || (value != "MODEL" && value != "MODELS")) {
         throw std::runtime_error("Expected 'MODEL' after 'GET'.");
     }
     token = tokenizer.NextToken();
-    if ((token.type == TokenType::SYMBOL || token.value == ";") && value == "MODELS" {
+    if ((token.type == TokenType::SYMBOL || token.value == ";") && value == "MODELS") {
         auto get_all_statement = std::make_unique<GetAllModelStatement>();
         statement = std::move(get_all_statement);
     } else {
