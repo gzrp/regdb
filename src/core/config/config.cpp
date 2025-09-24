@@ -123,7 +123,7 @@ void Config::ConfigModelSpaceTable(duckdb::Connection& con, std::string& schema_
         // 测试使用
         if (type == ConfigType::GLOBAL) {
             con.Query(duckdb_fmt::format(" INSERT INTO {}.{} (model_name, model_type, model_args) "
-                                         " VALUES ('default', 'MLP', '{\"in_features\": 10, \"out_features\": 2, \"hidden_features\": [512, 512, 512, 512, 512, 512] }'); ",
+                                         " VALUES ('default', 'MLP', '{{\"in_features\": 10, \"out_features\": 2, \"hidden_features\": [512, 512, 512, 512, 512, 512] }}'); ",
                                          schema_name, table_name));
         }
     }
