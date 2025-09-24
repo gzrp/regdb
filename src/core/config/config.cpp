@@ -9,7 +9,7 @@ duckdb::DatabaseInstance* Config::local_db;
 
 // 获取 schema 名称
 std::string Config::get_schema_name() {
-    return "regdb";
+    return "regdb_config";
 }
 
 // 获取存储路径
@@ -112,11 +112,10 @@ void Config::ConfigModelSpaceTable(duckdb::Connection& con, std::string& schema_
         con.Query(duckdb_fmt::format(" INSTALL JSON; "
                                      " LOAD JSON; "
                                      " CREATE TABLE {}.{} ( "
-                                     " model_name VARCHAR NOT NULL, "
+                                     " model_name VARCHAR NOT NULL PRIMARY KEY, "
                                      " model_type VARCHAR NOT NULL, "
                                      " model_args JSON NOT NULL, "
-                                     " updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
-                                     " PRIMARY KEY model_name "
+                                     " updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP "
                                      " ); ",
                                      schema_name, table_name));
 
